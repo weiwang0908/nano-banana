@@ -1,8 +1,44 @@
 'use client'
 
+interface Step {
+  name: string
+  description: string
+  image?: string
+}
+
+interface TutorialData {
+  title: string
+  description: string
+  image?: string
+  duration?: string
+  steps?: Step[]
+}
+
+interface ToolData {
+  title: string
+  description: string
+  features?: string[]
+}
+
+interface ImageItem {
+  url: string
+  description: string
+  author: string
+}
+
+interface GalleryData {
+  images?: ImageItem[]
+}
+
+interface ResourceData {
+  title: string
+  description: string
+  type: string
+}
+
 interface StructuredDataProps {
   type: 'website' | 'tutorial' | 'tool' | 'gallery' | 'resource'
-  data: any
+  data: TutorialData | ToolData | GalleryData | ResourceData | Record<string, unknown>
 }
 
 export default function StructuredData({ type, data }: StructuredDataProps) {
@@ -22,13 +58,14 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
 
     switch (type) {
       case 'tutorial':
+        const tutorialData = data as TutorialData
         return {
           "@context": "https://schema.org",
           "@type": "HowTo",
-          "name": data.title,
-          "description": data.description,
-          "image": data.image,
-          "totalTime": data.duration,
+          "name": tutorialData.title,
+          "description": tutorialData.description,
+          "image": tutorialData.image,
+          "totalTime": tutorialData.duration,
           "estimatedCost": {
             "@type": "MonetaryAmount",
             "currency": "USD",
@@ -40,7 +77,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
               "name": "Nano Banana account"
             }
           ],
-          "step": data.steps?.map((step: any, index: number) => ({
+          "step": tutorialData.steps?.map((step: Step, index: number) => ({
             "@type": "HowToStep",
             "position": index + 1,
             "name": step.name,
@@ -50,11 +87,12 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         }
 
       case 'tool':
+        const toolData = data as ToolData
         return {
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
-          "name": data.title,
-          "description": data.description,
+          "name": toolData.title,
+          "description": toolData.description,
           "applicationCategory": "AI Image Generation Tool",
           "operatingSystem": "Web Browser",
           "offers": {
@@ -62,16 +100,17 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             "price": "0",
             "priceCurrency": "USD"
           },
-          "featureList": data.features || []
+          "featureList": toolData.features || []
         }
 
       case 'gallery':
+        const galleryData = data as GalleryData
         return {
           "@context": "https://schema.org",
           "@type": "ImageGallery",
           "name": "Nano Banana Gallery",
           "description": "Collection of AI-generated images created with Nano Banana",
-          "image": data.images?.map((img: any) => ({
+          "image": galleryData.images?.map((img: ImageItem) => ({
             "@type": "ImageObject",
             "contentUrl": img.url,
             "description": img.description,
@@ -83,13 +122,14 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         }
 
       case 'resource':
+        const resourceData = data as ResourceData
         return {
           "@context": "https://schema.org",
           "@type": "CreativeWork",
-          "name": data.title,
-          "description": data.description,
+          "name": resourceData.title,
+          "description": resourceData.description,
           "genre": "Educational Resource",
-          "learningResourceType": data.type,
+          "learningResourceType": resourceData.type,
           "educationalLevel": "Beginner to Advanced",
           "isAccessibleForFree": true
         }
