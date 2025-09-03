@@ -3,22 +3,26 @@ import { getPostBySlug, getAllPosts } from '@/lib/content'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { type Locale } from '@/lib/translations'
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+    locale: Locale
+  }>
 }
 
 export function generateStaticParams() {
   const posts = getAllPosts()
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
+  return posts.flatMap((post) => [
+    { slug: post.slug, locale: 'en' as Locale },
+    { slug: post.slug, locale: 'zh' as Locale }
+  ])
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug, locale } = await params
+  const post = getPostBySlug(slug)
 
   if (!post) {
     notFound()
@@ -35,12 +39,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header locale={locale} />
       <main className="pt-16">
         {/* Back Button */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Link
-            href="/blog"
+            href={`/${locale}/blog`}
             className="inline-flex items-center text-yellow-600 hover:text-yellow-800 font-medium"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />

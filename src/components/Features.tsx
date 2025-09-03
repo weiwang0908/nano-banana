@@ -1,40 +1,46 @@
 'use client'
 
 import { MessageSquare, Users, Palette, Zap } from 'lucide-react'
+import { translations, type Locale } from '@/lib/translations'
 
-const features = [
-  {
-    icon: MessageSquare,
-    title: "自然语言编辑",
-    description: "支持中英文描述，智能理解用户意图，精确还原描述内容，让创作更加直观简单。"
-  },
-  {
-    icon: Users,
-    title: "角色一致性",
-    description: "强大的角色保持能力，确保同一角色在不同场景中保持特征稳定，适合系列创作。"
-  },
-  {
-    icon: Palette,
-    title: "场景保留",
-    description: "智能场景识别和保留，支持背景环境的一致性，让多张图片形成连贯的视觉故事。"
-  },
-  {
-    icon: Zap,
-    title: "高质量输出",
-    description: "先进的AI算法确保生成图像的高质量，支持多种分辨率和格式，满足不同需求。"
-  }
-]
+interface FeaturesProps {
+  locale: Locale
+}
 
-export default function Features() {
+export default function Features({ locale }: FeaturesProps) {
+  const t = translations[locale].features
+  
+  const features = [
+    {
+      icon: MessageSquare,
+      title: t.naturalLanguage.title,
+      description: t.naturalLanguage.description
+    },
+    {
+      icon: Users,
+      title: t.characterConsistency.title,
+      description: t.characterConsistency.description
+    },
+    {
+      icon: Palette,
+      title: t.sceneRetention.title,
+      description: t.sceneRetention.description
+    },
+    {
+      icon: Zap,
+      title: t.highQuality.title,
+      description: t.highQuality.description
+    }
+  ]
   return (
     <section id="features" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-gray-900">
-            Nano Banana 核心功能
+            {t.title}
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            专业级AI图像生成工具，为创作者提供强大的技术支持
+            {t.description}
           </p>
         </div>
 

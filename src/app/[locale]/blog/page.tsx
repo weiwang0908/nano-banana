@@ -1,13 +1,19 @@
 import Header from '@/components/Header'
 import { getAllPosts } from '@/lib/content'
 import BlogCard from '@/components/BlogCard'
+import { type Locale } from '@/lib/translations'
 
-export default function BlogPage() {
+interface BlogPageProps {
+  params: Promise<{ locale: Locale }>
+}
+
+export default async function BlogPage({ params }: BlogPageProps) {
+  const { locale } = await params
   const posts = getAllPosts()
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header locale={locale} />
       <main className="pt-16">
         {/* Hero Section */}
         <section className="py-16 bg-gradient-to-br from-yellow-50 to-orange-100">

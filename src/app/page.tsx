@@ -1,21 +1,5 @@
-import Header from '@/components/Header'
-import Hero from '@/components/Hero'
-import Features from '@/components/Features'
-import BlogSection from '@/components/BlogSection'
-import CaseStudies from '@/components/CaseStudies'
-import FAQ from '@/components/FAQ'
+import { redirect } from 'next/navigation'
 
-export default function Home() {
-  return (
-    <div className="min-h-screen">
-      <Header />
-      <main>
-        <Hero />
-        <Features />
-        <BlogSection />
-        <CaseStudies />
-        <FAQ />
-      </main>
-    </div>
-  )
+export default function RootPage() {
+  redirect('/en')
 }

@@ -4,8 +4,15 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Banana, Menu, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { translations, type Locale } from '@/lib/translations'
+import LanguageSelector from './LanguageSelector'
 
-export default function Header() {
+interface HeaderProps {
+  locale: Locale
+}
+
+export default function Header({ locale }: HeaderProps) {
+  const t = translations[locale].navigation
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
 
@@ -24,27 +31,28 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link href="/" className="text-sm font-medium text-gray-700 hover:text-yellow-600">
-            首页
+          <Link href={`/${locale}`} className="text-sm font-medium text-gray-700 hover:text-yellow-600">
+            {t.home}
           </Link>
-          <Link href="/blog" className="text-sm font-medium text-gray-700 hover:text-yellow-600">
-            博客
+          <Link href={`/${locale}/blog`} className="text-sm font-medium text-gray-700 hover:text-yellow-600">
+            {t.blog}
           </Link>
           <Link href="#features" className="text-sm font-medium text-gray-700 hover:text-yellow-600">
-            功能
+            {t.features}
           </Link>
           <Link href="#cases" className="text-sm font-medium text-gray-700 hover:text-yellow-600">
-            案例
+            {t.cases}
           </Link>
           <Link href="#faq" className="text-sm font-medium text-gray-700 hover:text-yellow-600">
-            常见问题
+            {t.faq}
           </Link>
         </nav>
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="/blog" className="inline-flex items-center justify-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-medium rounded-md transition-colors">
-            学习技巧
+          <LanguageSelector locale={locale} />
+          <Link href={`/${locale}/blog`} className="inline-flex items-center justify-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-medium rounded-md transition-colors">
+            {t.learnTips}
           </Link>
         </div>
 
@@ -65,24 +73,27 @@ export default function Header() {
       {isMounted && isMenuOpen && (
         <div className="md:hidden border-t bg-white">
           <div className="container py-4 space-y-4">
-            <Link href="/" className="block text-sm font-medium text-gray-700 hover:text-yellow-600">
-              首页
+            <Link href={`/${locale}`} className="block text-sm font-medium text-gray-700 hover:text-yellow-600">
+              {t.home}
             </Link>
-            <Link href="/blog" className="block text-sm font-medium text-gray-700 hover:text-yellow-600">
-              博客
+            <Link href={`/${locale}/blog`} className="block text-sm font-medium text-gray-700 hover:text-yellow-600">
+              {t.blog}
             </Link>
             <Link href="#features" className="block text-sm font-medium text-gray-700 hover:text-yellow-600">
-              功能
+              {t.features}
             </Link>
             <Link href="#cases" className="block text-sm font-medium text-gray-700 hover:text-yellow-600">
-              案例
+              {t.cases}
             </Link>
             <Link href="#faq" className="block text-sm font-medium text-gray-700 hover:text-yellow-600">
-              常见问题
+              {t.faq}
             </Link>
-            <div className="pt-4">
-              <Link href="/blog" className="inline-flex items-center justify-center w-full px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-medium rounded-md transition-colors">
-                学习技巧
+            <div className="pt-4 space-y-3">
+              <div className="w-full">
+                <LanguageSelector locale={locale} />
+              </div>
+              <Link href={`/${locale}/blog`} className="inline-flex items-center justify-center w-full px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-medium rounded-md transition-colors">
+                {t.learnTips}
               </Link>
             </div>
           </div>

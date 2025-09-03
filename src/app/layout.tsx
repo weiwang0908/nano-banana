@@ -13,33 +13,33 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nano Banana - 专业AI图像生成工具",
-  description: "Nano Banana是专业的AI图像生成工具，支持自然语言编辑、角色一致性保持和场景保留。为设计师、艺术家和内容创作者提供强大的创作支持。",
-  keywords: "nano banana, AI图像生成, 人工智能, 图像创作, 角色一致性, 场景保留, 自然语言编辑, AI工具, 图像设计",
+  title: "Nano Banana - Professional AI Image Generation Tool",
+  description: "Nano Banana is a professional AI image generation tool that supports natural language editing, character consistency, and scene retention. Provides powerful creative support for designers, artists, and content creators.",
+  keywords: "nano banana, AI image generation, artificial intelligence, image creation, character consistency, scene retention, natural language editing, AI tools, image design",
   authors: [{ name: "Nano Banana Team" }],
   creator: "Nano Banana",
   publisher: "Nano Banana",
   robots: "index, follow",
   openGraph: {
     type: "website",
-    locale: "zh_CN",
+    locale: "en_US",
     url: "https://nanobanana.ai",
-    title: "Nano Banana - 专业AI图像生成工具",
-    description: "专业的AI图像生成工具，支持自然语言编辑、角色一致性保持和场景保留。",
+    title: "Nano Banana - Professional AI Image Generation Tool",
+    description: "Professional AI image generation tool that supports natural language editing, character consistency, and scene retention.",
     siteName: "Nano Banana",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Nano Banana - 专业AI图像生成工具",
+        alt: "Nano Banana - Professional AI Image Generation Tool",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nano Banana - 专业AI图像生成工具",
-    description: "专业的AI图像生成工具，支持自然语言编辑、角色一致性保持和场景保留。",
+    title: "Nano Banana - Professional AI Image Generation Tool",
+    description: "Professional AI image generation tool that supports natural language editing, character consistency, and scene retention.",
     images: ["/og-image.jpg"],
     creator: "@nanobanana",
   },
@@ -55,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
