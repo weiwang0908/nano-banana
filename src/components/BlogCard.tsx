@@ -1,14 +1,18 @@
 import Link from 'next/link'
 import { Post } from '@/lib/content'
+import { translations, type Locale } from '@/lib/translations'
 
 interface BlogCardProps {
   post: Post
+  locale: Locale
 }
 
-export default function BlogCard({ post }: BlogCardProps) {
+export default function BlogCard({ post, locale }: BlogCardProps) {
+  const t = translations[locale].blog
+  
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('zh-CN', {
+    return date.toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -43,10 +47,10 @@ export default function BlogCard({ post }: BlogCardProps) {
           </time>
           
           <Link
-            href={`/blog/${post.slug}`}
+            href={`/${locale}/blog/${post.slug}`}
             className="text-yellow-600 hover:text-yellow-800 font-medium text-sm transition-colors"
           >
-            阅读更多 →
+            {t.readMore}
           </Link>
         </div>
       </div>

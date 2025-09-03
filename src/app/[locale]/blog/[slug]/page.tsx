@@ -3,7 +3,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/content'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import { type Locale } from '@/lib/translations'
+import { translations, type Locale } from '@/lib/translations'
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -23,6 +23,7 @@ export function generateStaticParams() {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug, locale } = await params
   const post = getPostBySlug(slug)
+  const t = translations[locale].blog
 
   if (!post) {
     notFound()
@@ -30,7 +31,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('zh-CN', {
+    return date.toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -48,7 +49,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             className="inline-flex items-center text-yellow-600 hover:text-yellow-800 font-medium"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            返回博客列表
+            {t.backToBlog}
           </Link>
         </div>
 

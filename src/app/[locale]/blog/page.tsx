@@ -1,7 +1,7 @@
 import Header from '@/components/Header'
 import { getAllPosts } from '@/lib/content'
 import BlogCard from '@/components/BlogCard'
-import { type Locale } from '@/lib/translations'
+import { translations, type Locale } from '@/lib/translations'
 
 interface BlogPageProps {
   params: Promise<{ locale: Locale }>
@@ -10,6 +10,7 @@ interface BlogPageProps {
 export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = await params
   const posts = getAllPosts()
+  const t = translations[locale].blog
 
   return (
     <div className="min-h-screen">
@@ -20,10 +21,10 @@ export default async function BlogPage({ params }: BlogPageProps) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                Nano Banana 使用技巧
+                {t.title}
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                学习专业的AI图像生成技巧，掌握Nano Banana的核心功能，提升你的创作效率
+                {t.description}
               </p>
             </div>
           </div>
@@ -34,7 +35,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
-                <BlogCard key={post.slug} post={post} />
+                <BlogCard key={post.slug} post={post} locale={locale} />
               ))}
             </div>
           </div>
